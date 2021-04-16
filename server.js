@@ -6,7 +6,7 @@ var app = express();
 //AGREGANDO ROUTER A APP
 app.use(router);
 router.get('/si', function (req,res){
-    res.send('Hola desde get')
+    res.send({mensaje: 'Hola desde get'})
 });
 
 app.use(router);
@@ -37,4 +37,4 @@ router.get('/', function (req,res){
 
 
 app.listen(4000);
-console.log("La app esta escuchando en el puerto 3000")
+console.log("La app esta escuchando en el puerto 4000")
