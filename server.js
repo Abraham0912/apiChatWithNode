@@ -1,40 +1,33 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
 
 var app = express();
 
-//AGREGANDO ROUTER A APP
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(router);
-router.get('/si', function (req,res){
-    res.send({mensaje: 'Hola desde get'})
+
+router.get("/message", function(req,res){
+    console.log(req.headers);
+    res.header( {
+    "myHeader":"nuesto valor personalizado",
+    "otro-header":"el otro header"
+    } );
+    res.send('lista de mensajes');
 });
 
-app.use(router);
-router.post('/si', function (req,res){
-    res.send('Hola desde post');
-});
+router.delete('/message', function(req,res){
+    console.log(req.query)//por url debe estar localhost:4000/message?orderById=25
+    console.log(req.body)//por body en formato json{"mensaje": "hola desde insomnia"}
+    //res.send('This message is deleted ' + req.query.orderById || 'sin orderById');
+    res.json({"this is message is delete":req.query.orderById})
+    console.log(req.headers);
+})
 
-
-app.use(router);
-router.get('/yes', function (req,res){
-    res.send('i am rout yes with get');
-});
-
-
-app.use(router);
-router.post('/yes', function (req,res){
-    res.send('i am rout yes with post');
-});
-
-
-app.use(router);
-router.get('/', function (req,res){
-    res.send('i am rout home with get');
-});
-// app.use('/', function (req,res) {
-//     res.send('Hello wordl');
-// });
-
+router.get('/', function(req,res) {
+    res.json("Bienvanido a localhost:4000");
+})
 
 app.listen(4000);
 console.log("La app esta escuchando en el puerto 4000")
