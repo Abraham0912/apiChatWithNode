@@ -1,8 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const router = express.Router();
+const bodyParser = require('body-parser');//Recibir body's
+const router = express.Router();//rOUTER PERMITE SEPARAR LAS PETICIONES POR METODOS GET, POST, ETC, POR CABECERAS, POR URL'S
 
-var app = express();
+//SI NO SE USARA Router Quedaria de la siguiente forma y ademas todos con todos los metodos responderia lo mismo
+/*
+    app.use('/', function(req, resp){
+        resp.send("hola");
+    });
+*/
+
+var app = express();//INICIALIZANDO EL SERVIDOR POR MEDIO DE ESTE METODO
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -20,8 +27,9 @@ router.get("/message", function(req,res){
 router.delete('/message', function(req,res){
     console.log(req.query)//por url debe estar localhost:4000/message?orderById=25
     console.log(req.body)//por body en formato json{"mensaje": "hola desde insomnia"}
-    //res.send('This message is deleted ' + req.query.orderById || 'sin orderById');
-    res.json({"this is message is delete":req.query.orderById})
+    res.status(201).send('This message is deleted ' + req.body.mensaje || 'sin body');
+    //res.json({"this is message is delete": req.query,
+              //"Otro mensaje": req.body  })
     console.log(req.headers);
 })
 
